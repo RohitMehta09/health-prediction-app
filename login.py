@@ -5,12 +5,17 @@ def login_page():
     # Inject custom CSS for background and styling
     st.markdown("""
         <style>
-        body {
+        body, .stApp {
             margin: 0;
             padding: 0;
+            background: transparent !important; /* Ensure body and main container are transparent */
+        }
+        .block-container {
+            background: transparent !important; /* Make the main block container transparent */
+            box-shadow: none !important; /* Remove any shadow that might appear */
         }
         .background {
-            background-image: url('https://source.unsplash.com/1600x900/?health,technology');
+            background-image: url('https://plus.unsplash.com/premium_photo-1670459707416-26dad95d99af?q=80&w=1897&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Replace with a direct image URL */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -21,12 +26,20 @@ def login_page():
             height: 100%;
             z-index: -1;
         }
-        
+        .main-container {
+            background: transparent !important; /* Ensure main container is transparent */
+            position: relative; /* Ensure it sits above the background */
+            z-index: 1; /* Ensure it is above the background */
+        }
         .title {
             font-size: 2.5rem;
-            color: #4CAF50;
+            font-weight: bold;
+            color: #4B0082;
             text-align: center;
             margin-bottom: 20px;
+        }
+        label {
+            color: black !important; /* Change label text color to black */
         }
         </style>
         <div class="background"></div>
@@ -51,7 +64,7 @@ def login_page():
             st.error("Invalid username or password. Please try again.")
 
     # Link to signup page
-    st.markdown("Don't have an account? Sign up here", unsafe_allow_html=True)
+    st.markdown("Don't have an account? [Sign up here](#)", unsafe_allow_html=True)
     if st.button("Sign Up", key="signup_button"):
         st.session_state.page = "signup"
 
