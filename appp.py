@@ -52,6 +52,11 @@ st.markdown("""
     label {
         color: black !important; /* Change label text color to black */
     }
+    .feedback-text {
+        color: black !important;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+    }
     </style>
     <div class="background"></div>
 """, unsafe_allow_html=True)
