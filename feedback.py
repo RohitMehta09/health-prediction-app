@@ -27,7 +27,7 @@ def get_feedback(model, prediction):
                     "Monitor your blood sugar regularly.",
                     "Maintain a healthy weight and stay active."
                 ],
-                "Consultation": '<span style="color:black;">Schedule a visit with an endocrinologist.</span>'
+                "Consultation": "Schedule a visit with an endocrinologist."
             }
         else:
             return {
