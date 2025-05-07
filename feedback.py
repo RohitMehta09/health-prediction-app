@@ -4,9 +4,9 @@ def get_feedback(model, prediction):
             return {
                 "Risk Level": '<span style="color:black;">⚠️ High Risk</span>',
                 "Precautions": [
-                    "Avoid saturated fats and reduce salt intake.",
-                    "Quit smoking and limit alcohol.",
-                    "Exercise regularly and manage stress."
+                    '<span style="color:black;">Avoid saturated fats and reduce salt intake.</span>',
+                    '<span style="color:black;">Quit smoking and limit alcohol.</span>',
+                    '<span style="color:black;">Exercise regularly and manage stress.</span>'
                 ],
                 "Consultation": '<span style="color:black;">Consider consulting a cardiologist and getting an ECG done.</span>'
             }
@@ -14,8 +14,8 @@ def get_feedback(model, prediction):
             return {
                 "Risk Level": '<span style="color:black;">✅ Low Risk</span>',
                 "Suggestions": [
-                    "Maintain a healthy diet and exercise regularly.",
-                    "Continue regular health checkups."
+                    '<span style="color:black;">Maintain a healthy diet and exercise regularly.</span>',
+                    '<span style="color:black;">Continue regular health checkups.</span>'
                 ]
             }
     elif model == "diabetes":
@@ -23,9 +23,9 @@ def get_feedback(model, prediction):
             return {
                 "Risk Level": '<span style="color:black;">⚠️ High Risk</span>',
                 "Precautions": [
-                    "Limit sugar and refined carbohydrates.",
-                    "Monitor your blood sugar regularly.",
-                    "Maintain a healthy weight and stay active."
+                    '<span style="color:black;">Limit sugar and refined carbohydrates.</span>',
+                    '<span style="color:black;">Monitor your blood sugar regularly.</span>',
+                    '<span style="color:black;">Maintain a healthy weight and stay active.</span>'
                 ],
                 "Consultation": '<span style="color:black;">Schedule a visit with an endocrinologist.</span>'
             }
@@ -33,7 +33,7 @@ def get_feedback(model, prediction):
             return {
                 "Risk Level": '<span style="color:black;">✅ Low Risk</span>',
                 "Suggestions": [
-                    "Stay active and eat a balanced diet.",
-                    "Get regular blood sugar screenings."
+                    '<span style="color:black;">Stay active and eat a balanced diet.</span>',
+                    '<span style="color:black;">Get regular blood sugar screenings.</span>'
                 ]
             }
