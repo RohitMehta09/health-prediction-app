@@ -29,7 +29,54 @@ def send_otp(email):
         return None
 
 def signup_page():
-    st.title("📝 Sign Up for AI Smart Health Monitoring System")
+    # Inject custom CSS for background and styling
+    st.markdown("""
+        <style>
+        body, .stApp {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+        }
+        .block-container {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        .background {
+            background-image: url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .main-container {
+            background: transparent !important;
+            position: relative;
+            z-index: 1;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4B0082;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            color: black !important;
+        }
+        </style>
+        <div class="background"></div>
+    """, unsafe_allow_html=True)
+
+    # Main container for signup form
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
+
+    # Title
+    st.markdown('<div class="title">📝 Sign Up for AI Smart Health Monitoring System</div>', unsafe_allow_html=True)
 
     # Signup form
     username = st.text_input("Choose a Username")
@@ -41,23 +88,37 @@ def signup_page():
         if username and email and password:  # Ensure all fields are filled
             otp = send_otp(email)
             if otp:
+                st.session_state["otp"] = otp  # Store OTP in session state
+                st.session_state["signup_data"] = {"username": username, "email": email, "password": password}
                 st.success("OTP sent to your email. Please check your inbox.")
-                entered_otp = st.text_input("Enter the OTP sent to your email")
-                verify_button = st.button("Verify OTP")
-
-                if verify_button:
-                    if entered_otp == otp:
-                        if register_user(username, email, password):
-                            st.success("Account created successfully! Please log in.")
-                            st.session_state.page = "login"  # Redirect to login page
-                        else:
-                            st.error("Username or email already exists. Please try again.")
-                    else:
-                        st.error("Invalid OTP. Please try again.")
+            else:
+                st.error("Failed to send OTP. Please try again.")
         else:
             st.error("Please fill in all fields.")
+
+    # OTP verification
+    if "otp" in st.session_state:
+        entered_otp = st.text_input("Enter the OTP sent to your email")
+        verify_button = st.button("Verify OTP")
+
+        if verify_button:
+            if entered_otp == str(st.session_state["otp"]):  # Compare entered OTP with stored OTP
+                signup_data = st.session_state.get("signup_data", {})
+                if signup_data:
+                    if register_user(signup_data["username"], signup_data["email"], signup_data["password"]):
+                        st.success("Account created successfully! Redirecting to login page...")
+                        st.session_state.page = "login"  # Redirect to login page
+                        del st.session_state["otp"]  # Clear OTP from session state
+                        del st.session_state["signup_data"]  # Clear signup data
+                    else:
+                        st.error("Username or email already exists. Please try again.")
+            else:
+                st.error("Invalid OTP. Please try again.")
 
     # Link to login page
     st.markdown("Already have an account? [Log in here](#)", unsafe_allow_html=True)
     if st.button("Log In"):
         st.session_state.page = "login"
+
+    # Close main container
+    st.markdown('</div>', unsafe_allow_html=True)
